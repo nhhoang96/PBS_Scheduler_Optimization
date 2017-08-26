@@ -16,14 +16,6 @@ extra_features = {}
 
 # Read all accounting logs into one single text file
 def read_into_txt(dest):
-		# currentDirectory = os.path.abspath(os.getcwd())
-		# #location = "/Cheyenne_January_March"
-		# location = ""
-		# l = [];
-		# l.append(currentDirectory);
-		# l.append(location);
-		# dest = "".join(l)
-
 		content = []
 		statusArray = ["Q", "S", "B", "E"];
 		read_files = glob.glob(dest + "/*")
@@ -130,13 +122,13 @@ def parseSelect(v):
 
 def main():
 	do_output = 0
-	if len(argv) < 4:
+	if len(argv) < 3:
 		print "Missing argument"
 		exit(1)
-	if len(argv) > 4:
+	if len(argv) > 3:
 		do_output = 1
 		read_into_txt(argv[1])
-		outputFile = open(argv[3], 'w')
+		outputFile = open('temp.csv', 'w')
 		output_writer = csv.writer(outputFile)
 		check = 1 # The title has not been written yet
 		accounting_file = open(argv[2], 'r')
@@ -216,8 +208,8 @@ def main():
 											diff = diff - corTime
 										elif (k == 'Resource_List.walltime'):
 											diff = diff + corTime
-
 										info.append(corTime)
+
 									elif (k == 'resources_used.mem' or k == 'resources_used.vmem'):
 										#Remove kb to make the filed numeric
 										if ('kb' in v):
@@ -272,10 +264,10 @@ def main():
 				if do_output == 0:
 					pass
 
-		outputFile = open(argv[4], 'w')
+		outputFile = open(argv[3], 'w')
 		output_writer = csv.writer(outputFile)
 
-		inputFile = open(argv[3], 'r')
+		inputFile = open('temp.csv', 'r')
 		reader = csv.reader(inputFile)
 		next(reader)
 		output_writer.writerow(title)
