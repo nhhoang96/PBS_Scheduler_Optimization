@@ -2,6 +2,12 @@ import pandas as pd
 from sys import argv
 import numpy as np
 
+
+# Argument order is as follows:
+#   1. Original csv file name from previous parsing stage
+#   2. Output csv file name all the fields (including labels, estimation error, resources_used.walltime)
+#   3. Output csv file name without estimation error and resources_used.walltime (used
+#       for training models)
 def handle_non_numerical_data(df):
 	columns = df.columns.values
 

@@ -14,6 +14,12 @@ import collections
 title = []
 extra_features = {}
 
+
+# Argument inputs are as follows:
+# 	1. Directory of accounting files
+#	2. Name of text output file
+#	3. Name of output csv file
+
 # Read all accounting logs into one single text file
 def read_into_txt(dest):
 		content = []
@@ -112,7 +118,8 @@ def parse_acct_record(m):
 # Parse "SELECT" field of accounting logs
 def parseSelect(v):
 	element = v.split(":")
-	numCores = element[0]
+	numCores = element[0]print (feature_array)
+
 	new_feature = {}
 	for e in range (1, len(element), 1):
 		comp = element[e].split("=")
@@ -178,7 +185,8 @@ def main():
 							info.append(rtime)
 							info.append(entity)
 
-							if (check == 1):
+							if (cprint (feature_array)
+heck == 1):
 								title.append("ID")
 								title.append("rtime")
 								title.append("Entity")
@@ -193,7 +201,8 @@ def main():
 									rec['Resource_List.mpiprocs'] = 0
 
 								new_features = {}
-								for k,v in rec.iteritems():
+								print (feature_array)
+for k,v in rec.iteritems():
 
 									if ((check == 1) and (k != 'Resource_List.select')):
 										title.append(k)
