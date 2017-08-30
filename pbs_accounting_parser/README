@@ -1,0 +1,11 @@
+INSTRUCTIONS:
+
+STEP 1: Run pbs_accounting_parser.py to extract PBS accounting logs into a CSV file (possible empty holes can still exist)
+		Argument 1: Location of 1 folder containing all of accounting logs
+		Argument 2: Name of output text file containing all of records from accounting logs
+		Argument 3: Name of output CSV file 
+
+STEP 2: Run final_edit.py to complete extraction process (all of the numeric blanks will be filled in with '0', labels are set). 
+		Argument 1: Name of output CSV file from the previous step
+		Argument 2: Name of output CSV file with all blanks are filled in and labels are set
+		Argument 3: Name of output CSV file with 'Estimation Error' and 'resources_used' items are removed (used for model training)
