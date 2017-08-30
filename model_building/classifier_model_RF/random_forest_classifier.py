@@ -11,6 +11,9 @@ import time
 import csv
 import math
 
+# The argument has the following order:
+#   1. CSV file name for training model
+
 start_time = time.time()
 df = pd.read_csv(argv[1])
 

@@ -1,0 +1,7 @@
+This module focuses on building different Random Forest Classifier models based on specific CSV accounting log and testing them on the other CSV accounting log. The module also calculates the average accuracy of each training model on testing months  
+
+PREREQUISITES:
+All CSV files that are used for training & testing classifier model need to be extracted beforehand from accounting logs and placed in the same folder 
+
+INSTRUCTIONS (to build & test RF models)
+Run plot_multiple_models.py followed by CSV file names as arguments

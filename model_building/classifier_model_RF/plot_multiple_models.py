@@ -19,7 +19,6 @@ for i in range (1,len(argv)):
 
     for j in argv:
         if not (j.endswith('.py') or (j == 'python')):
-            # if (count == 0):
             p = subprocess.Popen(['python', 'rf_test.py', j], stdout=subprocess.PIPE);
             out, err = p.communicate()
             out_cond = p.stdout
