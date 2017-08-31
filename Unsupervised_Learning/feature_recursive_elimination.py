@@ -7,7 +7,7 @@ from sys import argv
 
 # Argument order is as follows:
 #   1. CSV file name containing data from accounting logs
-#       needing Pearson Correlation Coefficient Correlation Analysis
+#       needing Feature Recursive Elimination Analysis
 #   2. CSV output file name containing Feature_Recursive_Elimination Result
 
 df = read_csv(argv[1])
