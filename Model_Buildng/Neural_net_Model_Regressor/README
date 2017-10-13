@@ -1,0 +1,10 @@
+PACKAGE REUQUIREMENTS:
+    Pandas
+    Numpy
+    TFLearn (TensorFlow library)
+    Matplotlib
+
+GOAL:
+    This package builds the Neural Network Regression Model based on the parsed accounting
+    logs and draws both Negative Predictions and Positive Predictions based on users'
+    estimations and DNN predictions

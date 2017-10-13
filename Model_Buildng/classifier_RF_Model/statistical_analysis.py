@@ -1,38 +1,36 @@
 import pandas as pd
 import numpy as np
 from sys import argv
-import scipy.stats as stats
 import matplotlib.pyplot as plt
 stdev = []
 max = []
 min = []
-estErrData = []
 monthMap = {}
 average = []
 
-# The arguments include parsed accounting logs of different months
+# The arguments include the list of parsed accounting logs of different months
 
+# Identify min, max, std, average from each month's data 
 for i in range (1, len(argv)):
     print (argv[i])
     df = pd.read_csv(argv[i])
     monthName = argv[i].split('_')[1]
+    estError = np.array(df['Estimation Error'].values)
+    estError = estError/ 3600.0
+    monthMap[monthName] = estError
+    max.append(estError.max())
+    min.append(estError.min())
+    stdev.append(estError.std())
+    average.append(estError.mean())
 
-    temp = np.array(df['Estimation Error'].values)
-    temp = temp/ 3600.0
-    estErrData.append(df['Estimation Error'].values)
-    monthMap[monthName] = temp
-    max.append(temp.max())
-    min.append(temp.min())
-    stdev.append(temp.std())
-    average.append(temp.mean())
-
+#-----------------------------------------------------------------------------
+# Extract month name from "parsed accounting log files"
 labels = []
-
 for i in range (1, len(argv)):
     monthName = argv[i].split('_')[1]
     labels.append(monthName)
 
-
+#----------------------------------------------------------------------------
 # Draw bar graph
 indices = np.array(range(len(stdev))) + 0.5
 width = 0.5

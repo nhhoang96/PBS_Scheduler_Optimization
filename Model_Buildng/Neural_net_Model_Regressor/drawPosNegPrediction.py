@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 from tflearn.data_utils import load_csv
 
-from sklearn.model_selection import train_test_split
+from sklearn.cross_validation import train_test_split
 from sklearn import cross_validation
 from sklearn import preprocessing
 
@@ -15,8 +15,9 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import confusion_matrix
 
 # The order of argument is as follows:
-#   1. CSV filename for training data
-#   2. TFLearn training model
+#   1. Full directory of CSV filename for training data
+#   2. Full directory of TFLearn training
+
 ZeroToTwo = {'Positive User Prediction':0, 'Positive Algorithm Prediction': 0, "Negative User Prediction": 0, "Negative Algorithm Prediction": 0}
 TwoToFour = {'Positive User Prediction':0, 'Positive Algorithm Prediction': 0, "Negative User Prediction": 0, "Negative Algorithm Prediction": 0}
 FourToSix = {'Positive User Prediction':0, 'Positive Algorithm Prediction': 0, "Negative User Prediction": 0, "Negative Algorithm Prediction": 0}
@@ -36,6 +37,8 @@ def algoDecision(setName, algo_diff):
     else:
         setName['Negative Algorithm Prediction'] += 1
 
+
+# Depending on values of running time, classify into different job classes
 def handleRange(runningTime, user_diff, algo_diff):
     if ((runningTime >= 0.0) and (runningTime <=2.0)):
         userDecision(ZeroToTwo, user_diff)
@@ -142,7 +145,7 @@ def main():
                                                     EightToTen['Positive Algorithm Prediction'],
                              MoreThanTen['Positive Algorithm Prediction']]), width=width, color='b', align = 'center')
 
-    rects3 = ax.bar(ind+ width *2 , np.array([ZeroToTwo['Negative User Prediction'],
+    rects3 = ax.bar(ind+ width *2, np.array([ZeroToTwo['Negative User Prediction'],
                                               TwoToFour['Negative User Prediction'],
                                   FourToSix['Negative User Prediction'],
                                   SixToEight['Negative User Prediction'],
@@ -177,6 +180,7 @@ def main():
     # autolabel(rects2, 'center')
     # autolabel(rects3, 'center')
     # autolabel(rects4, 'center')
+
     myFig.savefig('running time predictions.png')
     plt.show()
 

@@ -8,7 +8,7 @@ import datetime
 # with the newly predicted value from the model
 
 # The argument has the following order:
-#   1. Parsed CSV accounting file
+#   1. Full path of parsed CSV accounting file
 #   2. Directory of input accounting files
 #   3. Directory location of output accounting files
 
@@ -22,7 +22,6 @@ def read_into_txt():
     for f in files:
         with open(f, "r") as infile:
             parsedDate = f.split('/')
-            print location
             output_File = open(argv[3] + parsedDate[-1], 'w')
             data = infile.readlines()
 
@@ -53,16 +52,24 @@ def read_into_txt():
                 else:
                     output_File.write(line)
 
+
+# Entity, qtime and session help define distinct submitted jobs
 fields = ['Entity', 'qtime', 'session', 'Modified Resource_List.walltime']
-df = pd.read_csv(argv[1], usecols = fields)
+
 mapModified = {}
-entityArr = df['Entity'].values
-qtimeArr = df['qtime'].values
-sessionArr = df['session'].values
-wallTimeArr = df['Modified Resource_List.walltime'].values
 
-for i in range (len(wallTimeArr)):
-    correctedTime = datetime.timedelta(0, wallTimeArr[i])
-    mapModified[entityArr[i], qtimeArr[i], sessionArr[i]] = correctedTime
+def main():
+    df = pd.read_csv(argv[1], usecols=fields)
+    entityArr = df['Entity'].values
+    qtimeArr = df['qtime'].values
+    sessionArr = df['session'].values
+    wallTimeArr = df['Modified Resource_List.walltime'].values
 
-read_into_txt()
+    for i in range (len(wallTimeArr)):
+        correctedTime = datetime.timedelta(0, wallTimeArr[i])
+        mapModified[entityArr[i], qtimeArr[i], sessionArr[i]] = correctedTime
+
+    read_into_txt()
+
+if __name__ == "__main__":
+	main()

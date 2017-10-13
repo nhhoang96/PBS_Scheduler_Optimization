@@ -8,7 +8,8 @@ accMap = OrderedDict()
 avg = []
 
 #In order to run the test, we need to start as python random_forest_classifier.py
-# Then, we add the parsed_accounting (in form of csv) separated by space
+# Then, we concatenate the parsed_accounting (in form of csv) separated by space
+
 
 for i in range (1,len(argv)):
 
@@ -38,6 +39,9 @@ print accMap
 
 print ("Average of accuracy of all of the mdoels")
 print (avg)
+
+# ------------------------------------------------------------------
+# Plot the average accuracies of all models (Model 1 - 8)
 
 NUM_COLORS = 8
 

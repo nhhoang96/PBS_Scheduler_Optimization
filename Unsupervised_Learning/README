@@ -1,0 +1,6 @@
+GOAL: This part conducts Unsupervised Learning Methods for PBS Accounting logs, including:
+        1. K-mean Clustering (visualization in 2D)
+        2. Feature importance (extracted from Random Forest algorithms)
+        3. Feature Recursive Eliminatio
+        4. Principal Component Analysis
+        5. Pearson Correlation Coefficient

@@ -7,26 +7,25 @@ import calendar
 from datetime import timedelta
 import pandas as pd
 from itertools import cycle, islice
-import numpy as np
 import glob
 import collections
 
-title = []
+title = ['ID', 'rtime', 'Entity']
 extra_features = {}
 
 
 # Argument inputs are as follows:
-# 	1. Directory of accounting files
+# 	1. Directory of accounting
 #	2. Name of text output file
 #	3. Name of output csv file
+#   4. Directory of output file
 
 # Read all accounting logs into one single text file
 def read_into_txt(dest):
 		content = []
-		statusArray = ["Q", "S", "B", "E"];
 		read_files = glob.glob(dest + "/*")
 
-		with open(argv[2], "wb") as outfile:
+		with open(argv[4] + argv[2], "wb") as outfile:
 			for f in read_files:
 				with open(f, "r") as infile:
 					data = infile.readlines()
@@ -36,7 +35,7 @@ def read_into_txt(dest):
 							outfile.write(line)
 							outfile.write(infile.read())
 
-# Parse messages of accounting logs
+# Parse messages of accounting logs into dictionary
 def parse_acct_record(m):
 	squote = 0
 	dquote = 0
@@ -98,6 +97,7 @@ def parse_acct_record(m):
 				#aise Exception("Duplicate Key")
 				#print b
 
+# Parse "SELECT" field of account
 			in_key = 1
 			key = ""
 			value = ""
@@ -118,7 +118,7 @@ def parse_acct_record(m):
 # Parse "SELECT" field of accounting logs
 def parseSelect(v):
 	element = v.split(":")
-	numCores = element[0]print (feature_array)
+	numCores = element[0]
 
 	new_feature = {}
 	for e in range (1, len(element), 1):
@@ -129,19 +129,19 @@ def parseSelect(v):
 
 def main():
 	do_output = 0
-	if len(argv) < 3:
+	if len(argv) < 4:
 		print "Missing argument"
 		exit(1)
-	if len(argv) > 3:
+	if len(argv) > 4:
 		do_output = 1
 		read_into_txt(argv[1])
-		outputFile = open('temp.csv', 'w')
+		outputFile = open(argv[4] + 'temp.csv', 'w')
 		output_writer = csv.writer(outputFile)
 		check = 1 # The title has not been written yet
-		accounting_file = open(argv[2], 'r')
+		accounting_file = open(argv[4] + argv[2], 'r')
 		record_id = -1
 
-		#Per record
+		#Conduct extracting features from each job record
 		for entry in accounting_file:
 			record_id = record_id + 1
 			fields = split(entry, ';')
@@ -158,6 +158,7 @@ def main():
 				continue #PBS license stats? not associated with a job
 			rec = parse_acct_record(message)
 
+			# E records and not partial E records
 			if ((etype == 'E') and ( not ('[]' in entity))):
 				if do_output == 1:
 					diff = 0
@@ -169,13 +170,15 @@ def main():
 					# Ignore jobs with specified Resource_List.mem since not all users specify this information
 					elif ('Resource_List.mem' in rec.keys()):
 							pass
-							#Ignore
+
 					else:
-						if ((len(rec.keys()) != 28) and ('Resource_List.mpiprocs' in rec.keys()) and ('account' in rec.keys())):
+						if ((len(rec.keys()) != 28) and ('Resource_List.mpiprocs' in rec.keys())
+									and ('account' in rec.keys())):
 							pass
 							# Ignore
 
-						# Submitted jobs without specifying account name, ignore since it is old data
+						# Submitted jobs without specifying account name, IGNORE
+						# since it is old data
 						elif not ('account' in rec.keys()):
 							pass
 
@@ -184,12 +187,6 @@ def main():
 							info.append(record_id)
 							info.append(rtime)
 							info.append(entity)
-
-							if (cprint (feature_array)
-heck == 1):
-								title.append("ID")
-								title.append("rtime")
-								title.append("Entity")
 
 							qtime = 0
 							eligible = 0
@@ -201,8 +198,8 @@ heck == 1):
 									rec['Resource_List.mpiprocs'] = 0
 
 								new_features = {}
-								print (feature_array)
-for k,v in rec.iteritems():
+
+								for k,v in rec.iteritems():
 
 									if ((check == 1) and (k != 'Resource_List.select')):
 										title.append(k)
@@ -245,7 +242,6 @@ for k,v in rec.iteritems():
 
 									else:
 										info.append(v)
-
 								info.append(waitTime)
 								info.append(diff)
 
@@ -273,10 +269,10 @@ for k,v in rec.iteritems():
 				if do_output == 0:
 					pass
 
-		outputFile = open(argv[3], 'w')
+		outputFile = open(argv[4] + argv[3], 'w')
 		output_writer = csv.writer(outputFile)
 
-		inputFile = open('temp.csv', 'r')
+		inputFile = open(argv[4] + 'temp.csv', 'r')
 		reader = csv.reader(inputFile)
 		next(reader)
 		output_writer.writerow(title)

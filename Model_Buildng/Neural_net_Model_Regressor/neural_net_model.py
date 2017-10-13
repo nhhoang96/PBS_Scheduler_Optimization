@@ -8,10 +8,6 @@ from sklearn.cross_validation import train_test_split
 from sklearn import cross_validation
 from sklearn import preprocessing
 
-import matplotlib
-import matplotlib.pyplot as plt
-import matplotlib.pyplot as plt2
-import pandas as pd
 from sklearn.metrics import confusion_matrix
 from tflearn.data_utils import to_categorical
 from sys import argv
@@ -21,11 +17,12 @@ from tflearn.data_utils import load_csv
 # figure out the correct actual running time
 
 # The argument has order as follows:
-#   1. CSV file containing training data
-filename = 'label_classifier.csv'
+#   1. Full path CSV file containing training data (_train.csv)
+#   2. Full path CSV file containing testing data
+#   3. Output directory of the model
 data, labels = load_csv(argv[1], categorical_labels = True, n_classes = 7)
 
-print (labels,)
+#print (labels,)
 
 # Preprocess data (Normalize data)
 data = np.array(data)
@@ -55,11 +52,10 @@ sub_data, sub_data_test, sub_label, sub_label_test = train_test_split(data, labe
 
 # Start training (apply gradient descent algorithm)
 hist = model.fit(sub_data, sub_label, validation_set = (sub_data_test, sub_label_test), n_epoch=12, batch_size=batch_size, show_metric=True, shuffle = True)
-model.save('resources_used_removed_classifer.tflearn')
+model.save(argv[3] + 'resources_used_removed_classifer.tflearn')
 
 
 score = model.evaluate(sub_data_test, sub_label_test, batch_size=batch_size)
 print('Test score:', score[0])
 
-dataTest, labelsTest = load_csv('test_Against_labelled.csv', categorical_labels = True, n_classes = 7)
-
+dataTest, labelsTest = load_csv(argv[2], categorical_labels = True, n_classes = 7)

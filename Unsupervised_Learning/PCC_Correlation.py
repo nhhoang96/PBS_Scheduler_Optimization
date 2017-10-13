@@ -6,13 +6,11 @@ from sys import argv
 import numpy as np
 import pandas as pd
 from pandas import DataFrame
-import time
-import csv
 
 # Argument order is as follows:
-#   1. CSV file name containing data from accounting logs
+#   1. Full path CSV file name containing data from accounting logs
 #       needing Pearson Correlation Coefficient Correlation Analysis
-#   2. CSV output file name containing PCC Result
+#   2. Full path CSV output file name containing PCC Result
 
 def handle_non_numerical_data(df):
     columns = df.columns.values
@@ -49,8 +47,6 @@ def main():
 
     result = DataFrame.from_dict(correlations, orient='index')
     result.columns = ['PCC', 'p-value']
-
-    #print(result.sort_index())
     result.to_csv(argv[2])
 
 if __name__ == "__main__":

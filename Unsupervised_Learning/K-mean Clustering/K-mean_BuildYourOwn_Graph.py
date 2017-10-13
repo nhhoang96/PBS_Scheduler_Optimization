@@ -1,8 +1,6 @@
 import matplotlib.pyplot as plt
 from matplotlib import style
-from sklearn import preprocessing
-from sys import argv,exit
-
+from sys import argv
 
 style.use('ggplot')
 import numpy as np
@@ -10,7 +8,7 @@ import pandas as pd
 import time
 
 # Argument order is as follows:
-#   1. CSV file name containing data from accounting logs
+#   1. Full path CSV file name containing data from accounting logs
 #       needing Pearson Correlation Coefficient Correlation Analysis
 #   2. Y value (vertical value for K-mean visualization)
 #	3. X value (horizontal value for K-mean visualization)
@@ -106,8 +104,6 @@ def main():
 
 	X = np.array(df.astype(float))
 	#X = preprocessing.scale(X)
-
-	print X
 
 	for n in range(argv[4],argv[5], 1):
 		cluster = K_Means(k = n)
